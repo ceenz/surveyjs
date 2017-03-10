@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>survey.js : Icheck Custom Widget</title>
+        <title>survey.js : iCheck Radiogroup Custom Widget</title>
         <link rel="stylesheet" href="https://getbootstrap.com/dist/css/bootstrap.css"/>
         <link href="/css/style.css" type="text/css" rel="stylesheet" /> 
         <link href="/css/main.css" type="text/css" rel="stylesheet" />
@@ -466,7 +466,7 @@
     <div class="examplecontent wrapper wrapper-content">
     <div class="row">
         <div class="col-md-12">
-            <h3 class="contenttitle">Icheck Custom Widget</h3>
+            <h3 class="contenttitle">iCheck Radiogroup Custom Widget</h3>
             
             
                 
@@ -517,9 +517,10 @@
 
 Survey.JsonObject.metaData.addProperty("radiogroup", {name: "renderAs", default: "standard", choices: ["standard", "icheck"]});
 var survey = new Survey.Model({ questions: [
- { type: "radiogroup", name: "car", renderAs: "icheck", title: "Choose...", isRequired: true, colCount: 0,
-     choices: ["1", "2", "3", "4", "5"] }
+ { type: "radiogroup", name: "position", renderAs: "icheck", title: "Choose job position...", isRequired: true, colCount: 0,
+     choices: ["1|Designer", "2|Front-end Developer", "3|Back-end Developer", "4|Database Administrator", "5|System Engineer"] }
 ]});
+survey.data = {position:"2"};
 
 
 var widget = {
@@ -532,8 +533,7 @@ var widget = {
         }
         $(el).find('input').iCheck({
           checkboxClass: 'iradio_square-blue',
-          radioClass: 'iradio_square-blue',
-          increaseArea: '20%' // optional
+          radioClass: 'iradio_square-blue'
         });
         $(el).find('input').on('ifChecked', function(event){
           question.value = event.target.value;
@@ -543,7 +543,6 @@ var widget = {
     }
 }
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget);
-survey.data = {car:"3"};
 
 
 
@@ -567,9 +566,10 @@ survey.data = {car:"3"};
 Survey.Survey.cssType = "bootstrap";
 Survey.JsonObject.metaData.addProperty(&quot;radiogroup&quot;, {name: &quot;renderAs&quot;, default: &quot;standard&quot;, choices: [&quot;standard&quot;, &quot;icheck&quot;]});
 var survey = new Survey.Model({ questions: [
- { type: &quot;radiogroup&quot;, name: &quot;car&quot;, renderAs: &quot;icheck&quot;, title: &quot;Choose...&quot;, isRequired: true, colCount: 0,
-     choices: [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;] }
+ { type: &quot;radiogroup&quot;, name: &quot;position&quot;, renderAs: &quot;icheck&quot;, title: &quot;Choose job position...&quot;, isRequired: true, colCount: 0,
+     choices: [&quot;1|Designer&quot;, &quot;2|Front-end Developer&quot;, &quot;3|Back-end Developer&quot;, &quot;4|Database Administrator&quot;, &quot;5|System Engineer&quot;] }
 ]});
+survey.data = {position:&quot;2&quot;};
 
 
 var widget = {
@@ -582,8 +582,7 @@ var widget = {
         }
         $(el).find(&#39;input&#39;).iCheck({
           checkboxClass: &#39;iradio_square-blue&#39;,
-          radioClass: &#39;iradio_square-blue&#39;,
-          increaseArea: &#39;20%&#39; // optional
+          radioClass: &#39;iradio_square-blue&#39;
         });
         $(el).find(&#39;input&#39;).on(&#39;ifChecked&#39;, function(event){
           question.value = event.target.value;
@@ -593,7 +592,6 @@ var widget = {
     }
 }
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget);
-survey.data = {car:&quot;3&quot;};
 
 
 

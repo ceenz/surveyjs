@@ -517,9 +517,8 @@
 
 Survey.JsonObject.metaData.addProperty("dropdown", {name: "renderAs", default: "standard", choices: ["standard", "select2tagbox"]});
 var survey = new Survey.Model({ questions: [
- { type: "dropdown", name: "tagBox1", renderAs: "select2tagbox", title: "Choose...", isRequired: true, colCount: 0,
-     choices: ["1", "2", "3", "4", "5"] }
-]});
+ { type: "dropdown", renderAs: "select2tagbox", choicesByUrl: { url: "https://restcountries.eu/rest/v1/all" }, name: "countries", title: "Please select all countries you have been for the last 3 years."}
+ ]});
 
 
 var widget = {
@@ -532,15 +531,19 @@ var widget = {
 
         var widget = $el.select2({
             tags: "true",
-            data: question.choices.map(function(choice) { return { id: choice.value, text: choice.text }; }),
             theme: "classic"
         });
         $el.on('select2:unselect', function (e) {
             var index = (question.value || []).indexOf(e.params.data.id);
             if(index !== -1) {
-                question.value = question.value.splice(index, 1);
+                var val = question.value;
+                val.splice(index, 1);
+                question.value = val;
             }
         });
+        question.choicesChangedCallback = function() {
+            $el.select2({data: question.visibleChoices.map(function(choice) { return { id: choice.value, text: choice.text }; })});
+        }
         $el.on('select2:select', function (e) {
             question.value = (question.value || []).concat(e.params.data.id);
         });
@@ -552,7 +555,7 @@ var widget = {
     }
 }
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget);
-survey.data = { customSelect: "3" };
+survey.data = { countries: ["Andorra"] };
 
 
 
@@ -576,9 +579,8 @@ survey.data = { customSelect: "3" };
 Survey.Survey.cssType = "bootstrap";
 Survey.JsonObject.metaData.addProperty(&quot;dropdown&quot;, {name: &quot;renderAs&quot;, default: &quot;standard&quot;, choices: [&quot;standard&quot;, &quot;select2tagbox&quot;]});
 var survey = new Survey.Model({ questions: [
- { type: &quot;dropdown&quot;, name: &quot;tagBox1&quot;, renderAs: &quot;select2tagbox&quot;, title: &quot;Choose...&quot;, isRequired: true, colCount: 0,
-     choices: [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;] }
-]});
+ { type: &quot;dropdown&quot;, renderAs: &quot;select2tagbox&quot;, choicesByUrl: { url: &quot;https://restcountries.eu/rest/v1/all&quot; }, name: &quot;countries&quot;, title: &quot;Please select all countries you have been for the last 3 years.&quot;}
+ ]});
 
 
 var widget = {
@@ -591,15 +593,19 @@ var widget = {
 
         var widget = $el.select2({
             tags: &quot;true&quot;,
-            data: question.choices.map(function(choice) { return { id: choice.value, text: choice.text }; }),
             theme: &quot;classic&quot;
         });
         $el.on(&#39;select2:unselect&#39;, function (e) {
             var index = (question.value || []).indexOf(e.params.data.id);
             if(index !== -1) {
-                question.value = question.value.splice(index, 1);
+                var val = question.value;
+                val.splice(index, 1);
+                question.value = val;
             }
         });
+        question.choicesChangedCallback = function() {
+            $el.select2({data: question.visibleChoices.map(function(choice) { return { id: choice.value, text: choice.text }; })});
+        }
         $el.on(&#39;select2:select&#39;, function (e) {
             question.value = (question.value || []).concat(e.params.data.id);
         });
@@ -611,7 +617,7 @@ var widget = {
     }
 }
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget);
-survey.data = { customSelect: &quot;3&quot; };
+survey.data = { countries: [&quot;Andorra&quot;] };
 
 
 

@@ -519,8 +519,7 @@
 
 Survey.JsonObject.metaData.addProperty("dropdown", {name: "renderAs", default: "standard", choices: ["standard", "select2"]});
 var survey = new Survey.Model({ questions: [
- { type: "dropdown", name: "customSelect", renderAs: "select2", title: "Choose...", isRequired: true, colCount: 0,
-     choices: ["1", "2", "3", "4", "5"] }
+ { type: "dropdown", renderAs: "select2", choicesByUrl: { url: "https://restcountries.eu/rest/v1/all" }, name: "countries", title: "Please select the country you have arrived from:"}
 ]});
 
 
@@ -538,6 +537,9 @@ Vue.component(widget.name, {
             data: vm.question.choices.map(function(choice) { return { id: choice.value, text: choice.text }; }),
             theme: "classic"
         });
+        vm.question.choicesChangedCallback = function() {
+            $(vm.$el).select2({data: vm.question.visibleChoices.map(function(choice) { return { id: choice.value, text: choice.text }; })});
+        }
         $(vm.$el).on('select2:select', function (e) {
           vm.question.value = e.target.value;
         });
@@ -549,8 +551,7 @@ Vue.component(widget.name, {
     }
 })
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget);
-
-survey.data = { customSelect: "3" };
+survey.data = { countries: "Andorra" };
 
 new Vue({ el: '#surveyElement', data: { survey: survey } });
 
@@ -578,8 +579,7 @@ survey.onComplete.add(function (s) {
 Survey.Survey.cssType = "bootstrap";
 Survey.JsonObject.metaData.addProperty(&quot;dropdown&quot;, {name: &quot;renderAs&quot;, default: &quot;standard&quot;, choices: [&quot;standard&quot;, &quot;select2&quot;]});
 var survey = new Survey.Model({ questions: [
- { type: &quot;dropdown&quot;, name: &quot;customSelect&quot;, renderAs: &quot;select2&quot;, title: &quot;Choose...&quot;, isRequired: true, colCount: 0,
-     choices: [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;] }
+ { type: &quot;dropdown&quot;, renderAs: &quot;select2&quot;, choicesByUrl: { url: &quot;https://restcountries.eu/rest/v1/all&quot; }, name: &quot;countries&quot;, title: &quot;Please select the country you have arrived from:&quot;}
 ]});
 
 
@@ -597,6 +597,9 @@ Vue.component(widget.name, {
             data: vm.question.choices.map(function(choice) { return { id: choice.value, text: choice.text }; }),
             theme: &quot;classic&quot;
         });
+        vm.question.choicesChangedCallback = function() {
+            $(vm.$el).select2({data: vm.question.visibleChoices.map(function(choice) { return { id: choice.value, text: choice.text }; })});
+        }
         $(vm.$el).on(&#39;select2:select&#39;, function (e) {
           vm.question.value = e.target.value;
         });
@@ -608,8 +611,7 @@ Vue.component(widget.name, {
     }
 })
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget);
-
-survey.data = { customSelect: &quot;3&quot; };
+survey.data = { countries: &quot;Andorra&quot; };
 
 new Vue({ el: &#39;#surveyElement&#39;, data: { survey: survey } });
 

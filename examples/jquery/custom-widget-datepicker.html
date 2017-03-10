@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>survey.js : TagBox Custom Widget</title>
+        <title>survey.js : JQuery UI Datepicker Custom Widget</title>
         <link rel="stylesheet" href="https://getbootstrap.com/dist/css/bootstrap.css"/>
         <link href="/css/style.css" type="text/css" rel="stylesheet" /> 
         <link href="/css/main.css" type="text/css" rel="stylesheet" />
@@ -464,8 +464,8 @@
     </script>
     <div class="examplecontent wrapper wrapper-content">
     <div class="row">
-        <div class="col-md-12">
-            <h3 class="contenttitle">TagBox Custom Widget</h3>
+        <div class="col-md-8">
+            <h3 class="contenttitle">JQuery UI Datepicker Custom Widget</h3>
             
             
                 
@@ -506,6 +506,17 @@
 
 
 
+<script>
+
+window.surveyForceUpdate = function() {
+    document.getElementById("surveyElement").innerHTML = "";
+
+    $("#surveyElement").Survey({ model: survey });
+
+}
+</script>
+
+
 
 
 <script type="text/javascript">
@@ -515,10 +526,11 @@
 
 
 
+Survey.JsonObject.metaData.addProperty("dropdown", {name: "dateFormat", default: "mm/dd/yy", choices: ["mm/dd/yy", "yy-mm-dd", "d M, y", "d MM, y", "DD, d MM, yy", "'day' d 'of' MM 'in the year' yy"]});
 var survey = new Survey.Model({
     pages: [
         { name:"page1", questions: [
-            {name:"date", type:"text", inputType:"date", title: "Your favorite date:"}
+            {name:"date", type:"text", inputType:"date", title: "Your favorite date:", dateFormat: "mm/dd/yy"}
         ]}
     ]
 });
@@ -526,11 +538,11 @@ var survey = new Survey.Model({
 
 var widget = {
     name: "datepicker",
-    htmlTemplate: "<input id='widget-datepicker' type='text'>",
+    htmlTemplate: "<input id='widget-datepicker' type='text' style='width: 100%;'>",
     isFit : function(question) { return question.name == 'date'; },
     afterRender: function(question, el) {
 
-        var widget = $(el).find('#widget-datepicker').datepicker();
+        var widget = $(el).find('#widget-datepicker').datepicker({dateFormat: question.dateFormat});
 
         widget.on("change", function (e) {
             question.value = $(this).val();
@@ -538,6 +550,7 @@ var widget = {
         question.valueChangedCallback = function() {
             widget.datepicker('setDate', new Date(question.value));
         }
+        widget.datepicker('setDate', new Date(question.value || Date.now));
     }
 }
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget);
@@ -572,10 +585,11 @@ survey.onComplete.add(function (s) {
 <div>Source code: Survey setup</div>
 <pre><code class="language-javascript">Survey.defaultBootstrapCss.navigationButton = "btn btn-primary";
 Survey.Survey.cssType = "bootstrap";
+Survey.JsonObject.metaData.addProperty(&quot;dropdown&quot;, {name: &quot;dateFormat&quot;, default: &quot;mm/dd/yy&quot;, choices: [&quot;mm/dd/yy&quot;, &quot;yy-mm-dd&quot;, &quot;d M, y&quot;, &quot;d MM, y&quot;, &quot;DD, d MM, yy&quot;, &quot;&#39;day&#39; d &#39;of&#39; MM &#39;in the year&#39; yy&quot;]});
 var survey = new Survey.Model({
     pages: [
         { name:&quot;page1&quot;, questions: [
-            {name:&quot;date&quot;, type:&quot;text&quot;, inputType:&quot;date&quot;, title: &quot;Your favorite date:&quot;}
+            {name:&quot;date&quot;, type:&quot;text&quot;, inputType:&quot;date&quot;, title: &quot;Your favorite date:&quot;, dateFormat: &quot;mm/dd/yy&quot;}
         ]}
     ]
 });
@@ -583,11 +597,11 @@ var survey = new Survey.Model({
 
 var widget = {
     name: &quot;datepicker&quot;,
-    htmlTemplate: &quot;&lt;input id=&#39;widget-datepicker&#39; type=&#39;text&#39;&gt;&quot;,
+    htmlTemplate: &quot;&lt;input id=&#39;widget-datepicker&#39; type=&#39;text&#39; style=&#39;width: 100%;&#39;&gt;&quot;,
     isFit : function(question) { return question.name == &#39;date&#39;; },
     afterRender: function(question, el) {
 
-        var widget = $(el).find(&#39;#widget-datepicker&#39;).datepicker();
+        var widget = $(el).find(&#39;#widget-datepicker&#39;).datepicker({dateFormat: question.dateFormat});
 
         widget.on(&quot;change&quot;, function (e) {
             question.value = $(this).val();
@@ -595,6 +609,7 @@ var widget = {
         question.valueChangedCallback = function() {
             widget.datepicker(&#39;setDate&#39;, new Date(question.value));
         }
+        widget.datepicker(&#39;setDate&#39;, new Date(question.value || Date.now));
     }
 }
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget);
@@ -613,6 +628,28 @@ $(&quot;#surveyElement&quot;).Survey({
     
 
             </div>
+        </div>
+        
+        <div class="col-md-4 exampleoptions">
+            <div class="propertyitem">
+    <p>
+        <b>Date format: </b> (default is 'mm/dd/yy')
+        <div class="custom-select">
+            <select id="dateFormat" class="form-control" style="width:100%" onChange="survey.getQuestionByName('date').dateFormat = this.value; surveyForceUpdate();">
+                <option value="mm/dd/yy" selected="true">Default - mm/dd/yy</option>
+                <option value="yy-mm-dd">ISO 8601 - yy-mm-dd</option>
+                <option value="d M, y">Short - d M, y</option>
+                <option value="d MM, y">Medium - d MM, y</option>
+                <option value="DD, d MM, yy">Full - DD, d MM, yy</option>
+                <option value="'day' d 'of' MM 'in the year' yy">With text - 'day' d 'of' MM 'in the year' yy</option>
+            </select>
+        </div>
+        <pre><code class="language-javascript">var q = survey.getQuestionByName('date');
+q.dateFormat = yourvalue; 
+survey.render();</code></pre>
+    </p>
+</div>
+
         </div>
         
     </div>
