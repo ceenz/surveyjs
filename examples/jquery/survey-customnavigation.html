@@ -13,7 +13,7 @@
         
         
         
-        <script src="https://surveyjs.azureedge.net/0.12.3/survey.jquery.min.js"></script>
+        <script src="https://surveyjs.azureedge.net/0.12.4/survey.jquery.min.js"></script>
         
         <link href="/css/prism.css" type="text/css" rel="stylesheet" />
         <script src="/js/prism.js"></script>
@@ -26,7 +26,7 @@
         <div class="navbar-header">
             <a class="btn btn-lg btn-primary main-btn" href="/index.html"></a>
             <a class="version-link" role="button" href="https://github.com/surveyjs/surveyjs/releases" target="_blank">
-                the latest version 0.12.3
+                the latest version 0.12.4
             </a>
         </div>
         <ul class="nav navbar-nav">
@@ -207,6 +207,13 @@
                             <div><small>Devextreme TagBox</small></div>
                         </a>
                     </li>
+                
+                    <li >
+                        <a href="custom-widget-matrix-icheck.html">
+                            <span>ICheckMatrix</span>
+                            <div><small>Matrix with iCheck</small></div>
+                        </a>
+                    </li>
                     
                 </ul>
             </li>
@@ -306,44 +313,6 @@
             </li>
         
             <li >
-                <a href="#" onclick="doExpand('validation')">
-                    <span>Validation</span>
-                    <span id="imgvalidation" class="glyphicon pull-right glyphicon-chevron-down" aria-hidden="true"></span>
-                </a>
-                <ul id="examplesvalidation" class="nav nav-second-level"style="display:none">
-                
-                    <li >
-                        <a href="validators-standard.html">
-                            <span>Standard validators</span>
-                            <div><small>Example of using standard validators</small></div>
-                        </a>
-                    </li>
-                
-                    <li >
-                        <a href="validators-server.html">
-                            <span>Validate on Server</span>
-                            <div><small>Validate answers of the current page on server</small></div>
-                        </a>
-                    </li>
-                
-                    <li >
-                        <a href="validators-custom.html">
-                            <span>Create custom validators</span>
-                            <div><small>Example of creating and using a custom validator</small></div>
-                        </a>
-                    </li>
-                
-                    <li >
-                        <a href="validators-event.html">
-                            <span>Validate on event</span>
-                            <div><small>Example of using OnValidatateQuestion event</small></div>
-                        </a>
-                    </li>
-                    
-                </ul>
-            </li>
-        
-            <li >
                 <a href="#" onclick="doExpand('triggers')">
                     <span>Conditions and Triggers</span>
                     <span id="imgtriggers" class="glyphicon pull-right glyphicon-chevron-down" aria-hidden="true"></span>
@@ -375,6 +344,44 @@
                         <a href="trigger-setvalue.html">
                             <span>SetValue Trigger</span>
                             <div><small>On changing the question, change values of other questions</small></div>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </li>
+        
+            <li >
+                <a href="#" onclick="doExpand('validation')">
+                    <span>Validation</span>
+                    <span id="imgvalidation" class="glyphicon pull-right glyphicon-chevron-down" aria-hidden="true"></span>
+                </a>
+                <ul id="examplesvalidation" class="nav nav-second-level"style="display:none">
+                
+                    <li >
+                        <a href="validators-standard.html">
+                            <span>Standard validators</span>
+                            <div><small>Example of using standard validators</small></div>
+                        </a>
+                    </li>
+                
+                    <li >
+                        <a href="validators-server.html">
+                            <span>Validate on Server</span>
+                            <div><small>Validate answers of the current page on server</small></div>
+                        </a>
+                    </li>
+                
+                    <li >
+                        <a href="validators-custom.html">
+                            <span>Create custom validators</span>
+                            <div><small>Example of creating and using a custom validator</small></div>
+                        </a>
+                    </li>
+                
+                    <li >
+                        <a href="validators-event.html">
+                            <span>Validate on event</span>
+                            <div><small>Example of using OnValidatateQuestion event</small></div>
                         </a>
                     </li>
                     
@@ -542,19 +549,20 @@ var survey = new Survey.Model({
 });
 survey.showTitle = false;
 
-function setNavigationVisibility(survey) {
+function doOnCurrentPageChanged(survey) {
     document.getElementById('surveyPrev').style.display = !survey.isFirstPage ? "inline" : "none";
     document.getElementById('surveyNext').style.display = !survey.isLastPage ? "inline" : "none";
     document.getElementById('surveyComplete').style.display = survey.isLastPage ? "inline" : "none";
     document.getElementById('surveyProgress').innerText = "Page " + (survey.currentPage.visibleIndex + 1) + " of " + survey.visiblePageCount + ".";
+    if(document.getElementById('surveyPageNo')) document.getElementById('surveyPageNo').value = survey.currentPageNo;
 }
 
 
 $("#surveyElement").Survey({
     model: survey,
-    onCurrentPageChanged: setNavigationVisibility
+    onCurrentPageChanged: doOnCurrentPageChanged
 });
-setNavigationVisibility(survey);
+doOnCurrentPageChanged(survey);
 
 
 
@@ -606,19 +614,20 @@ var survey = new Survey.Model({
 });
 survey.showTitle = false;
 
-function setNavigationVisibility(survey) {
+function doOnCurrentPageChanged(survey) {
     document.getElementById(&#39;surveyPrev&#39;).style.display = !survey.isFirstPage ? &quot;inline&quot; : &quot;none&quot;;
     document.getElementById(&#39;surveyNext&#39;).style.display = !survey.isLastPage ? &quot;inline&quot; : &quot;none&quot;;
     document.getElementById(&#39;surveyComplete&#39;).style.display = survey.isLastPage ? &quot;inline&quot; : &quot;none&quot;;
     document.getElementById(&#39;surveyProgress&#39;).innerText = &quot;Page &quot; + (survey.currentPage.visibleIndex + 1) + &quot; of &quot; + survey.visiblePageCount + &quot;.&quot;;
+    if(document.getElementById(&#39;surveyPageNo&#39;)) document.getElementById(&#39;surveyPageNo&#39;).value = survey.currentPageNo;
 }
 
 
 $(&quot;#surveyElement&quot;).Survey({
     model: survey,
-    onCurrentPageChanged: setNavigationVisibility
+    onCurrentPageChanged: doOnCurrentPageChanged
 });
-setNavigationVisibility(survey);
+doOnCurrentPageChanged(survey);
 
 
 
@@ -631,20 +640,34 @@ setNavigationVisibility(survey);
         
         <div class="col-md-4 exampleoptions">
             <p>
+Get/set the current page No: 
+<select id="surveyPageNo" type="text" value="0" onChange="survey.currentPageNo = this.value;">
+    <option>0</option>
+    <option>1</option>
+    <option>2</option>
+</select>
+from 0 to visible page count - 1.
+<pre><code class="language-javascript">survey.currentPageNo = yourValue;</code></pre>
+</p>
+<p>
 Page Prev Text: <input type="text" value="Previous" onChange="survey.pagePrevText = this.value; survey.render();"/> default is "Previous".
-<pre><code class="language-javascript">survey.pagePrevText = yourValue; survey.render();</code></pre>
+<pre><code class="language-javascript">survey.pagePrevText = yourValue;
+survey.render();</code></pre>
 </p>
 <p>
 Page Next Text: <input type="text" value="Next" onChange="survey.pageNextText = this.value; survey.render();"/> default is "Next".
-<pre><code class="language-javascript">survey.pageNextText = yourValue; survey.render();</code></pre>
+<pre><code class="language-javascript">survey.pageNextText = yourValue;
+survey.render();</code></pre>
 </p>
 <p>
 Complete Text: <input type="text" value="Complete" onChange="survey.completeText = this.value; survey.render();"/> default is "Complete".
-<pre><code class="language-javascript">survey.completeText = yourValue; survey.render();</code></pre>
+<pre><code class="language-javascript">survey.completeText = yourValue;
+survey.render();</code></pre>
 </p>
 <p>
 Show Navigation Buttons: <input type="checkbox" checked="true" onChange="survey.showNavigationButtons = this.checked; survey.render();"/> default is true.
-<pre><code class="language-javascript">survey.showNavigationButtons = yourValue; survey.render();</code></pre>
+<pre><code class="language-javascript">survey.showNavigationButtons = yourValue;
+survey.render();</code></pre>
 </p>
 <p>
         </div>
