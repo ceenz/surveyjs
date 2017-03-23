@@ -541,14 +541,16 @@ var widget = {
     isFit : function(question) { return question["renderAs"] === 'icheck'; },
     isDefaultRender: true,
     afterRender: function(question, el) {
+        var $el = $(el);
         var select = function() {
-          $(el).find("input[value=" + question.value + "]").iCheck('check');
+          $el.find("input[value=" + question.value + "]").iCheck('check');
         }
-        $(el).find('input').iCheck({
+        $el.find('input').data({"iCheck": undefined});
+        $el.find('input').iCheck({
           checkboxClass: 'iradio_square-blue',
           radioClass: 'iradio_square-blue'
         });
-        $(el).find('input').on('ifChecked', function(event){
+        $el.find('input').on('ifChecked', function(event){
           question.value = event.target.value;
         });
         question.valueChangedCallback = select;
@@ -619,14 +621,16 @@ var widget = {
     isFit : function(question) { return question[&quot;renderAs&quot;] === &#39;icheck&#39;; },
     isDefaultRender: true,
     afterRender: function(question, el) {
+        var $el = $(el);
         var select = function() {
-          $(el).find(&quot;input[value=&quot; + question.value + &quot;]&quot;).iCheck(&#39;check&#39;);
+          $el.find(&quot;input[value=&quot; + question.value + &quot;]&quot;).iCheck(&#39;check&#39;);
         }
-        $(el).find(&#39;input&#39;).iCheck({
+        $el.find(&#39;input&#39;).data({&quot;iCheck&quot;: undefined});
+        $el.find(&#39;input&#39;).iCheck({
           checkboxClass: &#39;iradio_square-blue&#39;,
           radioClass: &#39;iradio_square-blue&#39;
         });
-        $(el).find(&#39;input&#39;).on(&#39;ifChecked&#39;, function(event){
+        $el.find(&#39;input&#39;).on(&#39;ifChecked&#39;, function(event){
           question.value = event.target.value;
         });
         question.valueChangedCallback = select;

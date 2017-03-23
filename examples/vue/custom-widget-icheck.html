@@ -540,18 +540,19 @@ Vue.component(widget.name, {
     props: ['question', 'css', 'isEditMode'],
     template:'<div><div v-for="(item, index) in question.visibleChoices"><label><input type="radio" :name="question.name" :value="item.value" :id="question.inputId + \'_\' + item.value"  /><span>{{ item.text}}</span></label></div></div>',
     mounted: function () {
-        var vm = this;
+        var question = this.question;
+        var $el = $(this.$el);
         var select = function() {
-          $(vm.$el).find("input[value=" + vm.question.value + "]").iCheck('check');
+          $el.find("input[value=" + question.value + "]").iCheck('check');
         }
-        $(vm.$el).find('input').iCheck({
+        $el.find('input').iCheck({
           checkboxClass: 'iradio_square-blue',
           radioClass: 'iradio_square-blue'
         });
-        $(vm.$el).find('input').on('ifChecked', function(event){
-          vm.question.value = event.target.value;
+        $el.find('input').on('ifChecked', function(event){
+          question.value = event.target.value;
         });
-        vm.question.valueChangedCallback = select;
+        question.valueChangedCallback = select;
         select();
     }
 })
@@ -597,18 +598,19 @@ Vue.component(widget.name, {
     props: [&#39;question&#39;, &#39;css&#39;, &#39;isEditMode&#39;],
     template:&#39;&lt;div&gt;&lt;div v-for=&quot;(item, index) in question.visibleChoices&quot;&gt;&lt;label&gt;&lt;input type=&quot;radio&quot; :name=&quot;question.name&quot; :value=&quot;item.value&quot; :id=&quot;question.inputId + \&#39;_\&#39; + item.value&quot;  /&gt;&lt;span&gt;{{ item.text}}&lt;/span&gt;&lt;/label&gt;&lt;/div&gt;&lt;/div&gt;&#39;,
     mounted: function () {
-        var vm = this;
+        var question = this.question;
+        var $el = $(this.$el);
         var select = function() {
-          $(vm.$el).find(&quot;input[value=&quot; + vm.question.value + &quot;]&quot;).iCheck(&#39;check&#39;);
+          $el.find(&quot;input[value=&quot; + question.value + &quot;]&quot;).iCheck(&#39;check&#39;);
         }
-        $(vm.$el).find(&#39;input&#39;).iCheck({
+        $el.find(&#39;input&#39;).iCheck({
           checkboxClass: &#39;iradio_square-blue&#39;,
           radioClass: &#39;iradio_square-blue&#39;
         });
-        $(vm.$el).find(&#39;input&#39;).on(&#39;ifChecked&#39;, function(event){
-          vm.question.value = event.target.value;
+        $el.find(&#39;input&#39;).on(&#39;ifChecked&#39;, function(event){
+          question.value = event.target.value;
         });
-        vm.question.valueChangedCallback = select;
+        question.valueChangedCallback = select;
         select();
     }
 })
