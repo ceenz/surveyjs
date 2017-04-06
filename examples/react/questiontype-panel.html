@@ -229,6 +229,13 @@
                             <div><small>SortableJS</small></div>
                         </a>
                     </li>
+                
+                    <li >
+                        <a href="custom-widget-image-picker.html">
+                            <span>ImagePicker</span>
+                            <div><small>Image Picker</small></div>
+                        </a>
+                    </li>
                     
                 </ul>
             </li>
@@ -536,6 +543,7 @@ var survey = new Survey.Model({
   }
  ]
 });
+survey.data = {satisfaction: 2};
 
 ReactDOM.render(<Survey.Survey model={survey} />, document.getElementById("surveyElement"));
 
@@ -577,6 +585,7 @@ var survey = new Survey.Model({
   }
  ]
 });
+survey.data = {satisfaction: 2};
 
 ReactDOM.render(&lt;Survey.Survey model={survey} /&gt;, document.getElementById(&quot;surveyElement&quot;));
 
@@ -599,7 +608,7 @@ ReactDOM.render(&lt;Survey.Survey model={survey} /&gt;, document.getElementById(
     <pre><code class="language-javascript">survey.pages[0].elements[1].innerIndent = yourTitle; survey.render();</code></pre>
     </p>
 </div>
-<script>survey.getQuestionByName('satisfaction').value = 2;</script>
+
         </div>
         
     </div>

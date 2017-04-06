@@ -227,6 +227,13 @@
                             <div><small>SortableJS</small></div>
                         </a>
                     </li>
+                
+                    <li >
+                        <a href="custom-widget-image-picker.html">
+                            <span>ImagePicker</span>
+                            <div><small>Image Picker</small></div>
+                        </a>
+                    </li>
                     
                 </ul>
             </li>
@@ -536,6 +543,7 @@ var survey = new Survey.Model({
   }
  ]
 });
+survey.data = {satisfaction: 2};
 
 var app = new Vue({
     el: '#surveyElement',
@@ -582,6 +590,7 @@ var survey = new Survey.Model({
   }
  ]
 });
+survey.data = {satisfaction: 2};
 
 var app = new Vue({
     el: &#39;#surveyElement&#39;,
@@ -609,7 +618,7 @@ var app = new Vue({
     <pre><code class="language-javascript">survey.pages[0].elements[1].innerIndent = yourTitle; survey.render();</code></pre>
     </p>
 </div>
-<script>survey.getQuestionByName('satisfaction').value = 2;</script>
+
         </div>
         
     </div>
