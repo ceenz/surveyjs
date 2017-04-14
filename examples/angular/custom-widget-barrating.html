@@ -24,7 +24,7 @@
         <script src="/js/angular2/angular.platform-browser.umd.js"></script>
         <script src="/js/angular2/angular.platform-browser-dynamic.umd.js"></script>
 
-        <script src="https://surveyjs.azureedge.net/0.12.6/survey.angular.min.js"></script>
+        <script src="https://surveyjs.azureedge.net/0.12.8/survey.angular.js"></script>
         
         <link href="/css/prism.css" type="text/css" rel="stylesheet" />
         <script src="/js/prism.js"></script>
@@ -37,7 +37,7 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="/index.html">Survey.JS</a>
             <a class="version-link" role="button" href="https://github.com/surveyjs/surveyjs/releases" target="_blank">
-                the latest version 0.12.6
+                the latest version 0.12.8
             </a>
         </div>
         <ul class="nav navbar-nav">
@@ -258,16 +258,16 @@
                 <ul id="examplessurvey" class="nav nav-second-level"style="display:none">
                 
                     <li >
-                        <a href="survey-cookie.html">
-                            <span>Use cookie</span>
-                            <div><small>Run survey one time in a browser</small></div>
+                        <a href="survey-oncomplete.html">
+                            <span>OnComplete handler</span>
+                            <div><small>Handle survey 'complete' event</small></div>
                         </a>
                     </li>
                 
                     <li >
-                        <a href="survey-localization.html">
-                            <span>Localization</span>
-                            <div><small>Localize your survey</small></div>
+                        <a href="survey-cookie.html">
+                            <span>Use cookie</span>
+                            <div><small>Run survey one time in a browser</small></div>
                         </a>
                     </li>
                 
@@ -324,6 +324,30 @@
                         <a href="survey-autonextpage.html">
                             <span>Go next page automatically</span>
                             <div><small>Go to the next page on answering questions automitically</small></div>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </li>
+        
+            <li >
+                <a href="#" onclick="doExpand('localization')">
+                    <span>Localization</span>
+                    <span id="imglocalization" class="glyphicon pull-right glyphicon-chevron-down" aria-hidden="true"></span>
+                </a>
+                <ul id="exampleslocalization" class="nav nav-second-level"style="display:none">
+                
+                    <li >
+                        <a href="survey-localization.html">
+                            <span>Localization</span>
+                            <div><small>Localize your survey</small></div>
+                        </a>
+                    </li>
+                
+                    <li >
+                        <a href="survey-multilanguages.html">
+                            <span>Multi Languages</span>
+                            <div><small>Create a survey with multi languages support</small></div>
                         </a>
                     </li>
                     
@@ -591,6 +615,13 @@ var widget = {
             $(el).find('select').barrating('set', question.value);
         }
     }
+    
+        ,
+        willUnmount: function(question, el) {
+            var $el = $(el).find("select");
+            $el.barrating('destroy');
+        } 
+    
 }
 
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget);
@@ -676,6 +707,13 @@ var widget = {
             $(el).find(&#39;select&#39;).barrating(&#39;set&#39;, question.value);
         }
     }
+    
+        ,
+        willUnmount: function(question, el) {
+            var $el = $(el).find(&quot;select&quot;);
+            $el.barrating(&#39;destroy&#39;);
+        } 
+    
 }
 
 Survey.CustomWidgetCollection.Instance.addCustomWidget(widget);
