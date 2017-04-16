@@ -1,13 +1,13 @@
 <template>
-    <form :class="css.checkbox.root">
+    <div :class="css.checkbox.root">
         <div v-for="(item, index) in question.visibleChoices" :class="css.radiogroup.item" :style="{width: colWidth, 'margin-right': question.colCount === 0 ? '5px': '0px'}">
-            <label :class="css.radiogroup.item">
+            <label :class="css.radiogroup.label">
                 <input type="checkbox" :name="question.name" :value="item.value" v-model="value" :id="question.inputId + '_' + item.value" :disabled="question.isReadOnly" />
                 <span>{{item.text}}</span>
                 <survey-other-choice v-show="question.hasOther && question.isOtherSelected" :class="css.radiogroup.other" :question="question" :css="css"/>
             </label>
         </div>
-    </form>
+    </div>
 </template>
 
 <script lang="ts">
